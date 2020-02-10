@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.duwu.mobi/schema/soa"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.duwu.mobi/schema/soa"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!--注册中心配置，用于配置连接注册中心相关信息。-->
+	<xsd:element name="madsregistry">
+		<xsd:complexType>
+			<xsd:attribute name="id" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="protocol" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="address" type="xsd:string"></xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+
+	<!--服务生产者端配置标签-->
+	<!--协议配置，用于配置提供服务的协议信息，协议由提供方指定(服务暴露)，消费方被动接受-->
+	<xsd:element name="madsprotocol">
+		<xsd:complexType>
+			<xsd:attribute name="id" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="name" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="port" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="host" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="contextpath" type="xsd:string"></xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<!--服务配置，用于暴露一个服务，定义服务的元信息，一个服务可以用多个协议暴露，一个服务也可以注册到多个注册中心-->
+	<xsd:element name="madsservice">
+		<xsd:complexType>
+			<xsd:attribute name="id" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="interface" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="ref" type="xsd:string"></xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+
+	<!--服务消费者配置标签-->
+	<!--接口服务注册-引用配置，用于创建一个远程服务代理，一个引用可以指向多个注册中心 -->
+	<xsd:element name="madsreference">
+		<xsd:complexType>
+			<xsd:attribute name="id" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="interface" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="check" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="protocol" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="loadbalance" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="cluster" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="retries" type="xsd:string"></xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>
