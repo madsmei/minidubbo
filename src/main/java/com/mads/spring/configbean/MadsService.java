@@ -18,6 +18,12 @@ public class MadsService implements InitializingBean,ApplicationContextAware {
     private String intf;//暴露的接口的全路径 interface='com.aa.xxx.AAService'
     private String ref;//（可选参数）
 
+    //一个接口有多个实现类，分别为每个实现类起一个名字，对应的MadsReference中也会配置这个属性来区分使用哪个实现类
+    private String group;
+    //给服务设置版本号，场景：消费者和生产者都是4台，现在把其中两台生产者和两台消费者升级为2.0版本，
+    // 那么就会剩下的两台1.0的只会去调用1.0版本的接口，如果说2.0版本没问题就可以吧剩下的两台也升级到2.0，否则就回退版本
+    private String version;
+
     private static ApplicationContext application;
 
     /*

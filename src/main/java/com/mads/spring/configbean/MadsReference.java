@@ -41,12 +41,20 @@ import java.util.Map;
 public class MadsReference implements FactoryBean,ApplicationContextAware,InitializingBean {
     private String id;
     private String intf;//远程接口全路径 (interface)
-    private String check;//是否检查
     private String protocol;//协议，如果不设置 则选用全局协议
     private String loadbalance;//负载均衡的配置
     private String cluster;//集群容错协议
     private String retries;//重连次数
+    private String check;//是否检查 此服务已经注册到注册中心，如果没有 消费者启动失败
 
+    //强制调用自己本地的接口服务，一般是远程和本地都有相同的服务比如都有UserService时。
+    private String injvm;
+    //生产者端 通过一个接口有多个实现类，用来告诉框架我们该使用哪个实现类，对应的MadsService中也会有这个属性
+    private String group;
+    //给服务设置版本号，场景：消费者和生产者都是4台，现在把其中两台生产者和两台消费者升级为2.0版本，
+    // 那么就会剩下的两台1.0的只会去调用1.0版本的接口，如果说2.0版本没问题就可以吧剩下的两台也升级到2.0，否则就回退版本
+    //生产者配置了version参数消费者一定要配置，不然消费者掉不到任何信息
+    private String version;
     
     private MadsInvoke invoke;
     
