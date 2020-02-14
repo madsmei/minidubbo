@@ -26,6 +26,12 @@ public class MadsProtocol implements ApplicationListener<ContextRefreshedEvent> 
     private String host;//(可选)
     private String contextpath;//工程上下文路径
 
+    //限制服务器接受的请求的最大数量
+    private String accepts;
+    //y延迟链接用于减少长连接数，当有调用发起时才创建长链接 ，注意此配置只针对使用长链接的dubbo协议生效
+    private String lazy;
+
+
 
     /*****
      * ContextRefreshedEvent 事件保证了 当Spring配置全部加载完以后再执行此逻辑

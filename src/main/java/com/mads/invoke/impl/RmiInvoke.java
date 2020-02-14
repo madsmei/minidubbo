@@ -6,6 +6,7 @@ import com.mads.invoke.MadsInvocation;
 import com.mads.invoke.MadsInvoke;
 import com.mads.loadbalance.LoadBanaceBase;
 import com.mads.loadbalance.LoadNodeInfo;
+import com.mads.monitor.MadsMonitor;
 import com.mads.monitor.MadsMonitorDelegate;
 import com.mads.rmi.RmiManager;
 import com.mads.rmi.SoaRmi;
@@ -19,6 +20,8 @@ import java.util.List;
  * @author
  */
 public class RmiInvoke implements MadsInvoke {
+
+    @MadsMonitor
     @Override
     public String invoke(MadsInvocation invocation) throws Exception {
         MadsReference reference = invocation.getReference();

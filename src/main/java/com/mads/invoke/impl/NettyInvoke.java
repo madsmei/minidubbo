@@ -7,6 +7,7 @@ import com.mads.invoke.MadsInvocation;
 import com.mads.invoke.MadsInvoke;
 import com.mads.loadbalance.LoadBanaceBase;
 import com.mads.loadbalance.LoadNodeInfo;
+import com.mads.monitor.MadsMonitor;
 import com.mads.monitor.MadsMonitorDelegate;
 import com.mads.netty.NettyUtil;
 import com.mads.spring.configbean.MadsReference;
@@ -18,6 +19,7 @@ import java.util.List;
  */
 public class NettyInvoke implements MadsInvoke {
 
+    @MadsMonitor
     @Override
     public String invoke(MadsInvocation invocation) throws Exception {
         MadsReference reference = invocation.getReference();
