@@ -9,6 +9,5 @@ import com.mads.monitor.MadsMonitor;
  */
 public interface MadsInvoke {
 
-    @MadsMonitor
     String invoke(MadsInvocation invocation) throws Exception;
 }

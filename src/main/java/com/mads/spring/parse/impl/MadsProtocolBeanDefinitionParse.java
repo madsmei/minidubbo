@@ -6,6 +6,8 @@ import org.springframework.beans.factory.xml.BeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 
+import java.util.HashMap;
+
 /*****
  * XSD 文件  protocol标签解析类
  * 因为我们这个类要交给Spring来实例化。所以我们实现了BeanDefinitionParser并重写parse方法最后并注册到Spring容器

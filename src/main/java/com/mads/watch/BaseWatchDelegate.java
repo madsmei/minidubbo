@@ -5,7 +5,6 @@ import com.mads.enum1.MadsRegistryEnum;
 import com.mads.spring.configbean.MadsRegistry;
 import com.mads.watch.impl.MongoWatch;
 import com.mads.watch.impl.RedisWatch;
-import com.mads.watch.impl.ZookeeperWatch;
 import org.springframework.context.ApplicationContext;
 
 import java.util.HashMap;
@@ -22,7 +21,7 @@ public class BaseWatchDelegate {
     private  static Map<String,RegistryWatchBase> watchs = new HashMap<>();
     static {
         watchs.put(MadsRegistryEnum.REDIS.getValue(),new RedisWatch());
-        watchs.put(MadsRegistryEnum.ZOOKEEPER.getValue(), new ZookeeperWatch());
+//        watchs.put(MadsRegistryEnum.ZOOKEEPER.getValue(), new ZookeeperWatch());
         watchs.put(MadsRegistryEnum.MONGODB.getValue(), new MongoWatch());
     }
 

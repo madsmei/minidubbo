@@ -27,6 +27,6 @@ public class RandomLoadBanace implements LoadBanaceBase {
             registryInfo = registryInfos.get(random);
         }
 
-        return LoadNodePrase.packageLoadNodeInfo(registryInfo);
+        return LoadNodePraseUtil.packageLoadNodeInfo(registryInfo);
     }
 }

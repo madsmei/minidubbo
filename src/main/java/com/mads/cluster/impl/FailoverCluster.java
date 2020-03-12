@@ -1,5 +1,6 @@
-package com.mads.cluster;
+package com.mads.cluster.impl;
 
+import com.mads.cluster.MadsCluster;
 import com.mads.invoke.MadsInvocation;
 import com.mads.invoke.MadsInvoke;
 

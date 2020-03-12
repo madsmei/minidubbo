@@ -1,12 +1,13 @@
-package com.mads.cluster;
+package com.mads.cluster.impl;
 
+import com.mads.cluster.MadsCluster;
 import com.mads.invoke.MadsInvocation;
 import com.mads.invoke.MadsInvoke;
 
 /*****
- * 失败了 什么都不干
+ * 失败就抛出异常
  */
-public class FailsafeCluster implements MadsCluster {
+public class FailfastCluster implements MadsCluster {
     
     public String invoke(MadsInvocation invocation) throws Exception {
         MadsInvoke invoke = invocation.getInvoke();
@@ -14,7 +15,7 @@ public class FailsafeCluster implements MadsCluster {
             return invoke.invoke(invocation);
         } catch (Exception e) {
             e.printStackTrace();
-            return "忽略异常";
+            throw e;
         }
     }
     

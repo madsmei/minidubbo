@@ -25,6 +25,6 @@ public interface BaseRegistry {
      * @param context
      * @return
      */
-    List<String> getRegistry(String id, ApplicationContext context);
+    List<String> getRegistry(String id, ApplicationContext context) ;
 
 }

@@ -34,7 +34,7 @@ public class RedisWatch implements RegistryWatchBase {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        //开启一个线程来 定时刷新服务列表到本地
         new Thread(()->{
             while (true) {
 
@@ -50,7 +50,7 @@ public class RedisWatch implements RegistryWatchBase {
                 }
 
                 try {
-                    //没10秒进行一次服务列表更新
+                    //每10秒进行一次服务列表更新
                     TimeUnit.SECONDS.sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -58,7 +58,7 @@ public class RedisWatch implements RegistryWatchBase {
             }
         }).start();
 
-        return false;
+        return true;
     }
 
 }

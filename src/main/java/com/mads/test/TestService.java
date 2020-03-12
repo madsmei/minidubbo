@@ -11,7 +11,6 @@ import com.mads.monitor.MadsMonitor;
  **/
 public interface TestService {
 
-    @MadsMonitor
     void getAop(String name,MadsInvocation invocation);
 
 }

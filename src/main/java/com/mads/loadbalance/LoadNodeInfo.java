@@ -6,17 +6,26 @@ package com.mads.loadbalance;
 public class LoadNodeInfo {
 
     private String host;//远程调用目标
-
     private String port;//远程的端口
-    //工程上下文 一般取值是  http协议下面 ：/项目名/+生产者端配置自定义Servlet时起的名字(/soa/api)详情看 DispatcherServlet
+    private String url;
+    //工程上下文 一般取值是  http协议下面 ：/项目名/+生产者端配置自定义Servlet时起的名字(/soa/api)详情看 @link{DispatcherServlet
     private String contextpath;
 
     public LoadNodeInfo(String host, String port) {
         this.host = host;
         this.port = port;
+        this.url = host+":"+port;
     }
 
     public LoadNodeInfo() {
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getHost() {

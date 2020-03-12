@@ -25,5 +25,5 @@ public class RoundLoadBanace implements LoadBanaceBase {
             index++;
         }
 
-        return LoadNodePrase.packageLoadNodeInfo(registryInfo);    }
+        return LoadNodePraseUtil.packageLoadNodeInfo(registryInfo);    }
 }

@@ -1,8 +1,8 @@
 package com.mads.spring.configbean;
 
-import com.mads.cluster.FailfastCluster;
-import com.mads.cluster.FailoverCluster;
-import com.mads.cluster.FailsafeCluster;
+import com.mads.cluster.impl.FailfastCluster;
+import com.mads.cluster.impl.FailoverCluster;
+import com.mads.cluster.impl.FailsafeCluster;
 import com.mads.cluster.MadsCluster;
 import com.mads.enum1.MadsRPCEnum;
 import com.mads.invoke.advice.MadsInvokeInvocationHandler;
@@ -11,6 +11,8 @@ import com.mads.invoke.MadsInvoke;
 import com.mads.invoke.impl.NettyInvoke;
 import com.mads.invoke.impl.RmiInvoke;
 import com.mads.loadbalance.LoadBanaceBase;
+import com.mads.loadbalance.impl.ConstantHashBanave;
+import com.mads.loadbalance.impl.LeastActiveBanace;
 import com.mads.loadbalance.impl.RandomLoadBanace;
 import com.mads.loadbalance.impl.RoundLoadBanace;
 import com.mads.registry.BaseRegistryDelegate;
@@ -79,7 +81,9 @@ public class MadsReference implements FactoryBean,ApplicationContextAware,Initia
         invokeMaps.put(MadsRPCEnum.NETTY.getValue(), new NettyInvoke());
 
         loadBanaceMaps.put("random", new RandomLoadBanace());
+        loadBanaceMaps.put("leastactive", new LeastActiveBanace());
         loadBanaceMaps.put("round", new RoundLoadBanace());
+        loadBanaceMaps.put("constanthash", new ConstantHashBanave());
 
         madsClusterServersMap.put("failover", new FailoverCluster());
         madsClusterServersMap.put("failfast", new FailfastCluster());

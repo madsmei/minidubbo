@@ -54,8 +54,8 @@ public class MadsMonitorAspect {
         //Spring的计时器
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-        //执行业务代码
         try {
+            //执行业务代码
             Object proceed = joinPoint.proceed();
         } catch (Throwable throwable) {
             throwable.printStackTrace();
