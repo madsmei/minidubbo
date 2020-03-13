@@ -1,7 +1,6 @@
 package com.mads.test;
 
-import com.mads.invoke.MadsInvocation;
-import com.mads.monitor.MadsMonitor;
+import com.mads.rpc.MadsInvocation;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class TestServiceImpl implements TestService {
 
-    @MadsMonitor
     @Override
     public void getAop(String name,MadsInvocation invocation) {
         System.out.println("TestServiceImpl ----test aop");

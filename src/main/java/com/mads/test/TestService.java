@@ -1,7 +1,6 @@
 package com.mads.test;
 
-import com.mads.invoke.MadsInvocation;
-import com.mads.monitor.MadsMonitor;
+import com.mads.rpc.MadsInvocation;
 
 /**
  * @Description: TODO

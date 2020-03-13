@@ -15,7 +15,14 @@ public class RpcRequest implements Serializable {
     private String serviceId;//com.aa.BB
     private String methodName;//调用的方法名
     private Object[] methodParams;//方法参数
-    private Class<?> paramTypes;//参数的类型
+    private Class<?>[] paramTypes;//参数的类型
+
+    public RpcRequest(String serviceId, String methodName, Object[] methodParams, Class<?>[] paramTypes) {
+        this.serviceId = serviceId;
+        this.methodName = methodName;
+        this.methodParams = methodParams;
+        this.paramTypes = paramTypes;
+    }
 
     public String getServiceId() {
         return serviceId;
@@ -41,11 +48,11 @@ public class RpcRequest implements Serializable {
         this.methodParams = methodParams;
     }
 
-    public Class<?> getParamTypes() {
+    public Class<?>[] getParamTypes() {
         return paramTypes;
     }
 
-    public void setParamTypes(Class<?> paramTypes) {
+    public void setParamTypes(Class<?>[] paramTypes) {
         this.paramTypes = paramTypes;
     }
 }

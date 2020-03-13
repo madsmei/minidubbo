@@ -1,5 +1,7 @@
-package com.mads.invoke;
+package com.mads.rpc;
 
+import com.mads.base.RpcRequest;
+import com.mads.loadbalance.LoadNodeInfo;
 import com.mads.spring.configbean.MadsReference;
 
 import java.lang.reflect.Method;
@@ -10,12 +12,10 @@ import java.lang.reflect.Method;
  */
 public class MadsInvocation {
 
-    private Method method;//调用的方法
-    private Object[] objs;//参数
-    private String intf;//intface 的值
+    private LoadNodeInfo nodeInfo;
+    private RpcRequest rpcrequest;
 
     private MadsReference reference;
-
     private MadsInvoke invoke;
 
     public MadsInvoke getInvoke() {
@@ -34,27 +34,19 @@ public class MadsInvocation {
         this.reference = reference;
     }
 
-    public Method getMethod() {
-        return method;
+    public LoadNodeInfo getNodeInfo() {
+        return nodeInfo;
     }
 
-    public void setMethod(Method method) {
-        this.method = method;
+    public void setNodeInfo(LoadNodeInfo nodeInfo) {
+        this.nodeInfo = nodeInfo;
     }
 
-    public Object[] getObjs() {
-        return objs;
+    public RpcRequest getRpcrequest() {
+        return rpcrequest;
     }
 
-    public void setObjs(Object[] objs) {
-        this.objs = objs;
-    }
-
-    public String getIntf() {
-        return intf;
-    }
-
-    public void setIntf(String intf) {
-        this.intf = intf;
+    public void setRpcrequest(RpcRequest rpcrequest) {
+        this.rpcrequest = rpcrequest;
     }
 }

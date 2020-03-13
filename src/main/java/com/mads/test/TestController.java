@@ -1,6 +1,6 @@
 package com.mads.test;
 
-import com.mads.invoke.MadsInvocation;
+import com.mads.rpc.MadsInvocation;
 import com.mads.spring.configbean.MadsReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +22,6 @@ public class TestController {
     @RequestMapping("/aop")
     public String testAop() {
         MadsInvocation invocation = new MadsInvocation();
-        invocation.setIntf("----a-----");
 
         MadsReference reference = new MadsReference();
         reference.setCluster("aaaa");

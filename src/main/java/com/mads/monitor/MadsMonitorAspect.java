@@ -1,19 +1,14 @@
-package com.mads.aop;
+package com.mads.monitor;
 
-import com.mads.invoke.MadsInvocation;
-import com.mads.monitor.MadsMonitor;
-import com.mads.monitor.MadsMonitorDelegate;
-import com.mads.spring.configbean.MadsReference;
+import com.mads.aop.AOPGetFieldsUtil;
+import com.mads.rpc.MadsInvocation;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.core.DefaultParameterNameDiscoverer;
-import org.springframework.core.ParameterNameDiscoverer;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
-import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -27,23 +22,29 @@ import java.util.Map;
 public class MadsMonitorAspect {
 
 
+    @Pointcut("execution(* com.mads.rpc.*.*(..))")
+    private void pointCutMethod() {
+    }
+
     /*****
      * 环绕通知。这样 所有使用了 MadsMonitor注解 都会被拦截
      * @param joinPoint
      * @return
      */
-    @Around("@annotation(madsMonitor)")
-    public Object around(ProceedingJoinPoint joinPoint, MadsMonitor madsMonitor) {
+    @Around("pointCutMethod()")
+    public Object around(ProceedingJoinPoint joinPoint) {
 
         String methodName = joinPoint.getSignature().getName();
         String className = joinPoint.getTarget().getClass().getName();
+        Object[] args = joinPoint.getArgs();//方法参数
 
         System.out.println("代理类名 "+className+" 的方法名-->"+methodName);
         try {
             Map<String,Object> map = AOPGetFieldsUtil.getFieldsName(joinPoint);
             MadsInvocation invocation = (MadsInvocation) map.get("invocation");
 
-            //-----在这里也已加一些其他业务逻辑------
+            //-----在这里也已加一些其他的例如保存数据库的操作------
+            System.out.println("方法名："+methodName+" url:"+invocation.getNodeInfo().getUrl());
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

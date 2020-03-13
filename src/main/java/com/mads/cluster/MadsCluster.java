@@ -1,6 +1,6 @@
 package com.mads.cluster;
 
-import com.mads.invoke.MadsInvocation;
+import com.mads.rpc.MadsInvocation;
 
 /**
  * 在生产中 各个微服务之间的调用并不能保证完全可用，比如网络波动、机房故障、等等。。。
