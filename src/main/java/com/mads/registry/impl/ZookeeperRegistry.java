@@ -16,6 +16,7 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
 import org.springframework.context.ApplicationContext;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -74,9 +75,20 @@ public class ZookeeperRegistry implements BaseRegistry {
     public void zkStart(String zkAdredd) {
         curatorFramework = CuratorFrameworkFactory.builder()
                 .connectString(zkAdredd)
-                .sessionTimeoutMs(4000)
+                .sessionTimeoutMs(40000)
                 .retryPolicy(new ExponentialBackoffRetry(1000, 10)).build();
         curatorFramework.start();
+
+        System.out.println("zk链接成功");
+    }
+
+    public static void main(String[] args) throws IOException {
+        ZookeeperRegistry aa = new ZookeeperRegistry();
+        aa.zkStart("127.0.0.1");
+
+        aa.zkRegister("mads", "127.0.0.1:8080");
+
+        System.in.read();
     }
 
     /*****
@@ -148,7 +160,7 @@ public class ZookeeperRegistry implements BaseRegistry {
      * 利用 ZK本身提供的监功能动态改变服务地址变动的更新
      * @param servicePath
      */
-    private void registerWatch(final String servicePath, ApplicationContext context,String serviceName) {
+    private void registerWatch(String servicePath, ApplicationContext context,String serviceName) {
 
         PathChildrenCache childrenCache = new PathChildrenCache(curatorFramework, servicePath, true);
 

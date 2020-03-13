@@ -2,6 +2,7 @@ package com.mads.util;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.mads.base.RpcRequest;
 import com.mads.spring.configbean.MadsService;
 import org.springframework.context.ApplicationContext;
 
