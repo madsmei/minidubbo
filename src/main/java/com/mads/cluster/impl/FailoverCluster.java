@@ -18,7 +18,7 @@ public class FailoverCluster implements MadsCluster {
         for (int i = 0; i < count; i++) {
             try {
                 MadsInvoke invoke = invocation.getInvoke();
-                String result = invoke.invoke(invocation);
+                String result = invoke.invokeMethod(invocation);
                 return result;
             } catch (Exception e) {
                 e.printStackTrace();

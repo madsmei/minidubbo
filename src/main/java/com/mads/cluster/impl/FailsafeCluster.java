@@ -12,7 +12,7 @@ public class FailsafeCluster implements MadsCluster {
     public String invoke(MadsInvocation invocation) throws Exception {
         MadsInvoke invoke = invocation.getInvoke();
         try {
-            return invoke.invoke(invocation);
+            return invoke.invokeMethod(invocation);
         } catch (Exception e) {
             e.printStackTrace();
             return "忽略异常";

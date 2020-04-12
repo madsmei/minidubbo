@@ -12,7 +12,8 @@ import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 
 
 /******
- * 这个类是用来注册 自定义标签的解析类的
+ * 这个类是用来注册 自定义标签和标签的解析类
+ * 容器启东时就会调用inti方法，
  * 一切的起点始于此
  * @author mads
  */

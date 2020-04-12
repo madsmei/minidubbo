@@ -14,7 +14,7 @@ import com.mads.rpc.MadsInvoke;
 public class NettyInvoke implements MadsInvoke {
 
     @Override
-    public String invoke(MadsInvocation invocation) throws Exception {
+    public String invokeMethod(MadsInvocation invocation) throws Exception {
 //        MadsReference reference = invocation.getReference();
 //
 //        //拿到服务列表

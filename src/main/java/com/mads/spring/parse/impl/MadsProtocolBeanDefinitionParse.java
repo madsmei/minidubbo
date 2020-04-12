@@ -1,6 +1,7 @@
 package com.mads.spring.parse.impl;
 
 import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.beans.factory.xml.BeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
@@ -25,7 +26,9 @@ public class MadsProtocolBeanDefinitionParse implements BeanDefinitionParser {
     public BeanDefinition parse(Element element, ParserContext parserContext) {
         //怎么才能够把element里面的属性值传到Reference，并且交给spring实例化
         //如果要涉及到一个类的实例化交给spring去实例，那么我们就可以new 一个 BeanDefinition对象
-        RootBeanDefinition rootBeanDefinition = new RootBeanDefinition();
+//        RootBeanDefinition rootBeanDefinition = new RootBeanDefinition();
+        //1.5以后新增加的。比RootBeanDefinition更强更快
+        GenericBeanDefinition rootBeanDefinition = new GenericBeanDefinition();
         rootBeanDefinition.setBeanClass(beanClass);
         rootBeanDefinition.setLazyInit(false);
         String id = element.getAttribute("id");

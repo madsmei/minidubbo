@@ -6,16 +6,16 @@ import com.mads.loadbalance.LoadBanaceBase;
 import com.mads.loadbalance.LoadNodeInfo;
 import com.mads.rpc.MadsInvocation;
 import com.mads.rpc.MadsInvoke;
+import com.mads.rpc.impl.NettyInvoke;
 import com.mads.spring.configbean.MadsReference;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.List;
 
 
-/*****8
- * 这个类就是一个增强类  advice
- *
+/*****
  * 通过这个类 来进行远程的RPC调用，
  *
  * @author mads
@@ -59,5 +59,14 @@ public class MadsInvokeInvocationHandler implements InvocationHandler{
         MadsCluster cluster = reference.getMadsClusterServersMap().get(reference.getCluster());
         String result = cluster.invoke(invocation);
         return result;
+    }
+
+    public static void main(String[] args) throws Exception {
+        //模拟测试伪代码，
+        MadsInvoke invoke = (MadsInvoke) Proxy.newProxyInstance(MadsInvoke.class.getClassLoader()
+                ,new Class[]{MadsInvoke.class}
+                ,new MadsInvokeInvocationHandler(new NettyInvoke(),new MadsReference()));
+
+        invoke.invoke(new MadsInvocation());
     }
 }

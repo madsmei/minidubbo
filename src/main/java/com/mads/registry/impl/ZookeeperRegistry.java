@@ -182,7 +182,7 @@ public class ZookeeperRegistry implements BaseRegistry {
                 }
             }
         };
-
+        //因为ZK的watch机制用过一次就失败了，所以需要再次注册监听
         childrenCache.getListenable().addListener(pathChildrenCacheListener);
 
         try {

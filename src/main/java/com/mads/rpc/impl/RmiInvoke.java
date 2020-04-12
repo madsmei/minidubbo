@@ -17,7 +17,7 @@ import java.rmi.RemoteException;
 public class RmiInvoke implements MadsInvoke {
 
     @Override
-    public String invoke(MadsInvocation invocation) throws Exception {
+    public String invokeMethod(MadsInvocation invocation) throws Exception {
 
         LoadNodeInfo nodeInfo = invocation.getNodeInfo();
         RpcRequest rpcRequest = invocation.getRpcrequest();
