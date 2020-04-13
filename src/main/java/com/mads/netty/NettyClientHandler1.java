@@ -26,7 +26,7 @@ public class NettyClientHandler1 extends SimpleChannelInboundHandler<ByteBuf> {
      * @throws Exception
      */
     @Override
-    protected void messageReceived(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf) throws Exception {
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf) throws Exception {
         response = byteBuf.toString();
     }
 
