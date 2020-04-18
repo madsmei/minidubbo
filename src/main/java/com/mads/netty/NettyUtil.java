@@ -1,5 +1,7 @@
 package com.mads.netty;
 
+import com.mads.xuliehua.kyro.KryoDecoder;
+import com.mads.xuliehua.kyro.KryoEncoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -9,9 +11,12 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
+import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.timeout.ReadTimeoutHandler;
 
 import java.net.InetSocketAddress;
 
@@ -44,11 +49,24 @@ public class NettyUtil {
                 protected void initChannel(SocketChannel ch)
                         throws Exception {
                     ChannelPipeline pipeline = ch.pipeline();
-                    pipeline.addLast("frameDecoder",
-                            new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4,0,4));
-                    pipeline.addLast("frameEncoder",new LengthFieldPrepender(4));
-                    pipeline.addLast("encoder",new ObjectEncoder());
-                    pipeline.addLast("decoder",new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.cacheDisabled(null)));
+
+                    pipeline.addLast(new ObjectEncoder());
+                    pipeline.addLast(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.cacheDisabled(null)));
+                    //超时检测
+                    pipeline.addLast(new ReadTimeoutHandler(10));
+                    //反序列化
+                    pipeline.addLast(new KryoDecoder());
+                    //序列化
+                    pipeline.addLast(new KryoEncoder());
+                    //给发送出去的消息增加长度字段
+//                    pipeline.addLast(new LengthFieldPrepender(4));
+                    //定长的方式解决 粘包半包
+//                    pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4,0,4));
+
+                    //这两行是解决粘包，原理就是读取知道遇到 有\n或\r\n
+                    pipeline.addLast(new LineBasedFrameDecoder(1024));
+//                    pipeline.addLast(new StringDecoder());
+
                     //IO数据的交互 都在这个增强类里
                     pipeline.addLast(new NettyServerInHandler());
                 }
@@ -77,7 +95,7 @@ public class NettyUtil {
     public static String sendMsg(String host,String port,final String sendmsg) throws Exception {
         EventLoopGroup workerGroup = new NioEventLoopGroup();
 
-        NettyClientHandler1 clientInHandler = new NettyClientHandler1();
+        NettyClientHandler clientInHandler = new NettyClientHandler();
         try {
             Bootstrap b = new Bootstrap();
             b.group(workerGroup)
@@ -88,11 +106,20 @@ public class NettyUtil {
                 protected void initChannel(SocketChannel ch)
                         throws Exception {
                     ChannelPipeline pipeline = ch.pipeline();
-                    pipeline.addLast("frameDecoder",
-                            new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4,0,4));
-                    pipeline.addLast("frameEncoder",new LengthFieldPrepender(4));
-                    pipeline.addLast("encoder",new ObjectEncoder());
-                    pipeline.addLast("decoder",new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.cacheDisabled(null)));
+
+                    pipeline.addLast(new ObjectEncoder());
+                    //给发送出去的消息增加长度字段
+//                    pipeline.addLast(new LengthFieldPrepender(4));
+                    //定长的方式解决 粘包半包
+//                    pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4,0,4));
+
+                    //这两行是解决粘包，原理就是读取知道遇到 有\n或\r\n
+                    pipeline.addLast(new LineBasedFrameDecoder(1024));
+//                    pipeline.addLast(new StringDecoder());
+
+                    pipeline.addLast(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.cacheDisabled(null)));
+//                    pipeline.addLast(new SerializationHandler(serialization))
+//                    pipeline.addLast(new DeserializationHandler(serialization));
                     pipeline.addLast(clientInHandler);
                 }
             });
@@ -101,7 +128,7 @@ public class NettyUtil {
             //此时我们还不知道 到底能不能成功建立链接，此时我们设置一个future 来拿到建立链接的通知结果
             ChannelFuture future = b.connect().sync();
 
-            future.channel().writeAndFlush(sendmsg);
+            future.channel().writeAndFlush(sendmsg+"\n");
 
             //阻塞 直到channel 发生了关闭
             future.channel().closeFuture().sync();

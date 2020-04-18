@@ -12,7 +12,7 @@ import io.netty.util.CharsetUtil;
  * @Version V1.0
  * @Author Mads
  **/
-public class NettyClientHandler1 extends SimpleChannelInboundHandler<ByteBuf> {
+public class NettyClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
     private Object response;//返回信息
 
@@ -38,7 +38,9 @@ public class NettyClientHandler1 extends SimpleChannelInboundHandler<ByteBuf> {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
 //        super.channelActive(ctx);
-        ctx.writeAndFlush(Unpooled.copiedBuffer("I am netty client",CharsetUtil.UTF_8));
+        //加上系统的换行符，解决粘包报班问题
+        String msg = "I am netty client" + System.getProperty("line.separator");
+        ctx.writeAndFlush(Unpooled.copiedBuffer(msg,CharsetUtil.UTF_8));
     }
 
     /*****

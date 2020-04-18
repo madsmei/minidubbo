@@ -1,6 +1,7 @@
 package com.mads.base;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * @Description: 暂时没有 用到。。。。，有空余时间了，在重构下 调用逻辑
@@ -22,6 +23,9 @@ public class RpcRequest implements Serializable {
         this.methodName = methodName;
         this.methodParams = methodParams;
         this.paramTypes = paramTypes;
+    }
+
+    public RpcRequest() {
     }
 
     public String getServiceId() {
@@ -54,5 +58,15 @@ public class RpcRequest implements Serializable {
 
     public void setParamTypes(Class<?>[] paramTypes) {
         this.paramTypes = paramTypes;
+    }
+
+    @Override
+    public String toString() {
+        return "RpcRequest{" +
+                "serviceId='" + serviceId + '\'' +
+                ", methodName='" + methodName + '\'' +
+                ", methodParams=" + Arrays.toString(methodParams) +
+                ", paramTypes=" + Arrays.toString(paramTypes) +
+                '}';
     }
 }

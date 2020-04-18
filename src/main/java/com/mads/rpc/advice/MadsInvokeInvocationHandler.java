@@ -67,6 +67,6 @@ public class MadsInvokeInvocationHandler implements InvocationHandler{
                 ,new Class[]{MadsInvoke.class}
                 ,new MadsInvokeInvocationHandler(new NettyInvoke(),new MadsReference()));
 
-        invoke.invoke(new MadsInvocation());
+        invoke.invokeMethod(new MadsInvocation());
     }
 }
